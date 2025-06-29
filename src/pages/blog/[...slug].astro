@@ -23,74 +23,214 @@ const tags = post.data.tags || [];
 ---
 
 <Layout title={title} description={description}>
-  <article class="mx-auto max-w-4xl px-6 py-12 sm:px-6 lg:px-8">
-    <header class="mb-8">
-      <div class="text-center">
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">
-  <N�>      {title}
-        </h1>
-        {description && (
-          <p class="text-xl text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
-            {description}
-          </p>
+  <!-- Hero Section with Gradient Background -->
+  <div class="relative bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-800 px-6 py-24 sm:px-6 lg:px-8">
+    <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+    <div class="relative mx-auto max-w-4xl text-center">
+      <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight drop-shadow-lg">
+        {title}
+      </h1>
+      {description && (
+        <p class="text-xl md:text-2xl text-gray-200 mb-8 leading-relaxed max-w-3xl mx-auto">
+          {description}
+        </p>
+      )}
+      <div class="flex flex-wrap justify-center items-center gap-6 text-white text-opacity-90">
+        {publishDate && (
+          <time datetime={new Date(publishDate).toISOString()} class="flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7a4 4 0 0 1 8 0A7 7 0 1 1 0 16a4 4 0 0 1 4-4 4 4 0 0 1 8 0c0 1-1 3 8 3 3 3 0 0 1-3 3h-1a7 7 0 1 1-3-14z"></path>
+            </svg>
+            {new Date(publishDate).toLocaleDateString('pt-BR', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </time>
         )}
-        <div class="flex justify-center items-center flex-wrap gap-4 text-gray-500 dark:text-gray-400 mb-8">
-          {publishDate && (
-            <time datetime={new Date(publishDate).toISOString()} class="flex items-center gap-1">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7a4 4 0 0 1 8 0A7 7 0 1 1 0 16a4 4 0 0 1 4-4 4 4 0 0 1 8 0c0 1-1 3%8 3 3 3 0 0 1-3 3h-1a7 7 0 1 1-3-14z"></path>
-  </w6          </svg>
-              {new Date(publishDate).toLocaleDateString('pt-BR', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })}
-            </time>
-          )}
-          {author && (
-            <span class="flex items-center gap-1">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 0 0-8 0 4 4 0 0 0 8 0zM12 14a7 7 0 0 0-7 7h13a7 7 0 0 0-6.71-5z"></path>
-              </svg>
-              por {author}
-            </span>
-          )}
-          {category && (
-            <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-xs font-medium">
-              {category}
-            </span>
-          )}
-        </div>
+        {author && (
+          <span class="flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 0 0-8 0 4 4 0 0 0 8 0zM12 14a7 7 0 0 0-7 7h13a7 7 0 0 0-6.71-5z"></path>
+            </svg>
+            por {author}
+          </span>
+        )}
+        {category && (
+          <span class="bg-white bg-opacity-20 px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm">
+            {category}
+          </span>
+        )}
       </div>
-    </header>
+    </div>
+  </div>
 
-    <div class="prose prose-lg max-w-none dark:prose-invert prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-strong:text-gray-900 dark:prose-strong:text-white">
+  <!-- Article Content with Luxury Styling -->
+  <article class="relative mx-auto max-w-4xl px-6 py-16 sm:px-6 lg:px-8">
+    <!-- Floating Table of Contents -->
+    <div class="hidden lg:block fixed top-32 left-8 w-64 yl-8 bg-white dark:bg-gray-900 rounded-lg shadow-lg border border-gray-200 dark:border-gray-800 z, z-10 p-6">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">índice</h3>
+      <nav class="space-y-2">
+        <a href="#introducao" class="block text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 transition-colors">Introdução</a>
+        <a href="#considerar" class="block text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 transition-colors">O que considerar</a>
+        <a href="#opcoes" class="block text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 transition-colors">Melhores opções</a>
+        <a href="#conclusao" class="block text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 transition-colors">Conclusão</a>
+      </nav>
+    </div>
+
+    <!-- Article Content -->
+    <div class="prose prose-lg max-w-none dark:prose-invert 
+               prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white 
+               prose-h1:text-4xl prose-h1:font-extrabold prose-h1:mb-8 prose-h1:mt-12
+               prose-h2:text-3xl prose-h2:font-bold prose-h2:mb-6 prose-h2:mt-10 
+               prose-h3:text-2xl prose-h3:font-semibold prose-h3:mb-4 prose-h3:mt-8
+               prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-6
+               prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-a:font-medium prose-a:hover:text-blue-800
+               prose-strong:text-gray-900 dark:prose-strong:text-white prose-strong:font-semibold
+               prose-ul:mb-6 prose-li:mb-2 prose-li:ml-4
+               prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:bg-blue-50 dark:prose-blockquote:bg-blue-900/20 prose-blockquote:p-4 prose-blockquote:rounded-r-lg
+               prose-code:font-mono prose-code:text-sm prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-2 prose-code:py-1 prose-code:rounded
+               prose-img:rounded-lg prose-img:shadow-lg">
       <Content />
     </div>
 
-    {tags.length > 0 && (
-      <footer class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tags</h3>
-        <div class="flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <span class="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
-              {tag}
+    <!-- Article Actions & Navigation -->
+    <div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-700">
+      <!-- Share Buttons -->
+      <div class="flex flex-wrap justify-center gap-4 "mb-8">
+        <h3 class="w-full text-lg font-semibold text-gray-900 dark:text-white mb-4 text-center">Compartilhar</h3>
+        <button class="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M23.998 12c0-6.618-5.38-12-12-12s-12 5.382-12 12c0 5.999 4.388 10.956 10.125 11.854v-8.385h-3.047v-3.47h3.047v-2.643c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953h-1.513c-1.491 0-1.954.925-1.954 1.879v2.25h3.328l-.532 3.47h-2.796v8.385c5.737-.898 10.125-5.855 10.125-11.854z"/>
+          </svg>
+          Facebook
+        </button>
+        <button class="flex items-center gap-2 bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-colors">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M23.353 4.617a2.617 2.617 0 0 0-1.843-1.767 3.419 3.419 0 0 0-2.034 3.039 7.745 7.745 0 0 0-3.91-3.04c-3.567-1.148-7.166 0-8.956 2.749a7.716 7.716 0 0 0-1.93 7.713 13 13 0 0 0 .975 3.285c.49.12.985.239 1.486.28l4.93-4.332s8.739-.044 12.051-2.068Z"/>
+  </p�g>
+          Twitter
+        </button>
+        <button class="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19.619 0h-4.662C12.44 0 10.17 2.24 10.17 4.998V9.13H6.834v4.403h3.336V24h4.304v-10.467h3.193l.492-4.403h-3.685V6.618c0-.98.628-1.48 1.416-1.48h3.227V0z"/>
+          </svg>
+          WhatsApp
+        </button>
+      </div>
+
+      <!-- Tags-->
+      {tags.length > 0 && (
+        <div class="mb-8">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tags</h3>
+          <div class="flex flex-wrap gap-3">
+            {tags.map((tag) => (
+              <span class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full text-sm font-medium hover:from-blue-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+              # {tag}
             </span>
           ))}
+          </div>
         </div>
-      </footer>
-    )}
+      )}
 
-    <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
-      <a 
-        href="/blog" 
-        class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors font-medium"
-      >
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7 7-7"></path>
-        </svg>
-        Voltar ao Blog
-      </a>
+      <!-- Navigation -->
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+        <a 
+          href="/blog" 
+          class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors font-medium bg-white dark:bg-gray-800 px-4 py-2 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7 7-7"></path>
+  </svg>
+          Voltar ao Blog
+        </a>
+        <div class="flex gap-2">
+          <button class="inline-flex items-center gap-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path>
+  </svg>
+            Próximo artigo
+          </button>
+          <button class="inline-flex items-center gap-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.59 15.41L12 10.83l-4.59 4.58L6 14l6-6 6 6z"></path>
+            </svg>
+            Artigo anterior
+          </button>
+        </div>
+      </div>
     </div>
   </article>
 </Layout>
+
+<style>
+  /* Smooth scrolling for TOC links */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Add hover effects for headings */
+  .prose h2,
+  .prose h3,
+  .prose h4 {
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .prose h2:hover,
+  .prose h3:hover,
+  .prose h4:hover {
+    transform: translateX(8px);
+    color: #3748 ff;
+  }
+
+  /* Add floating animation for tags */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-4px);
+    }
+  }
+  /* Reading progress bar */
+  .reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3748ff, #9333ea);
+    z-index: 1000;
+    transition: width 0.25s ease-out;
+  }
+</style>
+
+<script>
+  // Reading progress bar
+  document.addEventListener('DOMContentLoaded', function() {
+    const progressBar = document.createElement('div');
+    progressBar.className = 'reading-progress';
+    document.body.appendChild(progressBar);
+
+    window.addEventListener('scroll', function() {
+      const scrolled = window.scrollY;
+      const total = document.body.scrollHeight - window.innerHeight;
+      const progress = (scrolled / total) * 100;
+      progressBar.style.width = progress + '%';
+    });
+  });
+  // Smooth scroll for TOC links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href');
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+</script>
