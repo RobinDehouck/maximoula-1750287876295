@@ -12,57 +12,85 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content } = await post.render();
+
+// Fallback for old and new frontmatter formats
+const title = post.data.title;
+const description = post.data.excerpt || post.data.description || '';
+const publishDate = post.data.publishDate || post.data.pubDate;
+const author = post.data.author || 'Redação';
+const category = post.data.category;
+const tags = post.data.tags || [];
 ---
 
-<Layout title={post.data.title} description={post.data.description || ''}>
-  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<Layout title={title} description={description}>
+  <article class="mx-auto max-w-4xl px-6 py-12 sm:px-6 lg:px-8">
     <header class="mb-8">
       <div class="text-center">
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-          {post.data.title}
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 leading-tight">
+  <N�>      {title}
         </h1>
-        {post.data.description && (
-          <p class="text-xl text-gray-600 mb-6">{post.data.description}</p>
+        {description && (
+          <p class="text-xl text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+            {description}
+          </p>
         )}
-        <div class="flex justify-center items-center text-gray-500 mb-8">
-          {post.data.pubDate && (
-            <time datetime={post.data.pubDate.toISOString()}>
-              {new Date(post.data.pubDate).toLocaleDateString('pt-BR', {
+        <div class="flex justify-center items-center flex-wrap gap-4 text-gray-500 dark:text-gray-400 mb-8">
+          {publishDate && (
+            <time datetime={new Date(publishDate).toISOString()} class="flex items-center gap-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7a4 4 0 0 1 8 0A7 7 0 1 1 0 16a4 4 0 0 1 4-4 4 4 0 0 1 8 0c0 1-1 3%8 3 3 3 0 0 1-3 3h-1a7 7 0 1 1-3-14z"></path>
+  </w6          </svg>
+              {new Date(publishDate).toLocaleDateString('pt-BR', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
               })}
             </time>
           )}
-          {post.data.tags && post.data.tags.length > 0 && (
-            <div class="ml-6 flex gap-2">
-              {post.data.tags.map((tag) => (
-                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
-                  {tag}
-                </span>
-              ))}
-            </div>
+          {author && (
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 0 0-8 0 4 4 0 0 0 8 0zM12 14a7 7 0 0 0-7 7h13a7 7 0 0 0-6.71-5z"></path>
+              </svg>
+              por {author}
+            </span>
+          )}
+          {category && (
+            <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-xs font-medium">
+              {category}
+            </span>
           )}
         </div>
       </div>
     </header>
 
-    <div class="prose prose-lg max-w-none">
+    <div class="prose prose-lg max-w-none dark:prose-invert prose-headings:font-bold prose-headings:text-gray-900 dark:prose-headings:text-white prose-p:text-gray-700 dark:prose-p:text-gray-300 prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-strong:text-gray-900 dark:prose-strong:text-white">
       <Content />
     </div>
 
-    <footer class="mt-12 pt-8 border-t border-gray-200">
-      <div class="text-center">
-        <a 
-          href="/blog" 
-          class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium"
-        >
-          <svg class="mr-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-          </svg>
-          Voltar ao Blog
-        </a>
-      </div>
-    </footer>
+    {tags.length > 0 && (
+      <footer class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tags</h3>
+        <div class="flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <span class="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </footer>
+    )}
+
+    <div class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+      <a 
+        href="/blog" 
+        class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors font-medium"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7 7-7"></path>
+        </svg>
+        Voltar ao Blog
+      </a>
+    </div>
   </article>
 </Layout>
